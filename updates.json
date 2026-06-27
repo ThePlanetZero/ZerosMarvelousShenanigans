@@ -1,0 +1,45 @@
+[
+  {
+    "version": "0.8.0",
+    "updateName": "The Battle Update",
+    "description": "Placeholder description of what dropped in this patch. New nodes, balance changes, bug fixes, and whatever else made it in.",
+    "devNotes": "Hello everyone! Welcome to update 0.8.0. This one was a big one for us — we've been working on the combat feel for a while and we're really happy with where it landed. Let us know what you think.",
+    "date": "2026-06-01",
+    "changes": [
+      { "type": "added", "text": "New node: Reflect — bounces projectiles back at the sender" },
+      { "type": "added", "text": "New node: Chain — links an ability to fire again after a delay" },
+      { "type": "changed", "text": "Dash now has a 0.3s window where it can cancel into an attack" },
+      { "type": "changed", "text": "Knockback scaling now factors in the target's current health" },
+      { "type": "fixed", "text": "Fixed a bug where abilities could fire twice if triggered on the same frame" },
+      { "type": "removed", "text": "Removed the old Stun node — replaced by the new Condition system" }
+    ]
+  },
+  {
+    "version": "0.7.0",
+    "updateName": "The Node Update",
+    "description": "The graph editor got a major overhaul. More node types, a cleaner UI, and the first pass at the condition system.",
+    "devNotes": "This update took way longer than expected but I think it was worth it. The node editor is finally starting to feel like what I had in my head when I started this project.",
+    "date": "2026-04-15",
+    "changes": [
+      { "type": "added", "text": "Condition nodes — abilities can now check health, distance, cooldown state, and more" },
+      { "type": "added", "text": "8 new effect nodes across damage, movement, and utility categories" },
+      { "type": "added", "text": "Node search bar in the editor" },
+      { "type": "changed", "text": "Graph editor UI rebuilt from scratch — cleaner, faster, easier to read" },
+      { "type": "changed", "text": "Node connections now show type colors to help avoid mismatches" },
+      { "type": "fixed", "text": "Fixed graph not saving correctly when switching abilities mid-match" }
+    ]
+  },
+  {
+    "version": "0.6.0",
+    "updateName": "The Foundation",
+    "description": "The first real public build. Core gameplay loop, basic node editor, and multiplayer battles.",
+    "devNotes": "This is it. The first version anyone outside my friends list has played. It's rough around the edges but the core idea is here. Build an ability, fight someone, see what happens.",
+    "date": "2026-02-20",
+    "changes": [
+      { "type": "added", "text": "Core graph editor with 12 starter nodes" },
+      { "type": "added", "text": "Multiplayer battles — up to 4 players" },
+      { "type": "added", "text": "Character customization (basic)" },
+      { "type": "added", "text": "First pass at matchmaking" }
+    ]
+  }
+]

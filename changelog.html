@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Changelog — Zero's Marvelous Shenanigans</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f1014;
+  color: white;
+  font-family: Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 70px;
+  border-bottom: 1px solid #20232c;
+  position: sticky;
+  top: 0;
+  background: #0f1014;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+  color: white;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.links a {
+  color: #9fa6b3;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.links a:hover { color: white; }
+.links a.active { color: white; }
+
+.play {
+  background: white;
+  color: black;
+  padding: 11px 22px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.play:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 80px 70px 60px;
+  border-bottom: 1px solid #20232c;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.page-header-left h1 {
+  font-size: 68px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.page-header-left h1 span { color: #4ea8f5; }
+
+.page-header-left p {
+  font-size: 17px;
+  color: #9da4b0;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* back link shown when viewing a single update */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #9fa6b3;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.back-btn:hover { color: white; }
+.back-btn { display: none; }
+
+/* ── LIST VIEW ── */
+#list-view { display: block; }
+
+.updates-list {
+  padding: 0 70px;
+}
+
+.update-row {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  align-items: center;
+  gap: 40px;
+  padding: 36px 0;
+  border-bottom: 1px solid #20232c;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.update-row:first-child { border-top: 1px solid #20232c; margin-top: 20px; }
+
+.update-row:hover .update-row-name { color: #4ea8f5; }
+
+.update-row-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.update-row-version {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9d7dea;
+}
+
+.update-row-date {
+  font-size: 13px;
+  color: #3d4150;
+  font-weight: 600;
+}
+
+.update-row-name {
+  font-size: 24px;
+  font-weight: 800;
+  transition: color 0.15s;
+}
+
+.update-row-desc {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 480px;
+  margin-top: 6px;
+}
+
+.update-row-count {
+  font-size: 13px;
+  color: #3d4150;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.update-row-arrow {
+  color: #3d4150;
+  font-size: 18px;
+  transition: color 0.15s, transform 0.15s;
+}
+
+.update-row:hover .update-row-arrow {
+  color: #4ea8f5;
+  transform: translateX(4px);
+}
+
+/* ── DETAIL VIEW ── */
+#detail-view { display: none; }
+
+.detail-wrap {
+  padding: 60px 70px 100px;
+  max-width: 860px;
+}
+
+.detail-version {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9d7dea;
+  margin-bottom: 10px;
+}
+
+.detail-name {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.detail-date {
+  font-size: 14px;
+  color: #3d4150;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.detail-description {
+  font-size: 18px;
+  color: #9da4b0;
+  line-height: 1.75;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #20232c;
+}
+
+/* Dev notes */
+.detail-devnotes {
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #20232c;
+}
+
+.detail-section-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4ea8f5;
+  margin-bottom: 16px;
+}
+
+.detail-devnotes p {
+  font-size: 17px;
+  color: #9da4b0;
+  line-height: 1.8;
+}
+
+/* Changes list */
+.detail-changes {}
+
+.changes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.change-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #13151d;
+  border: 1px solid #20232c;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #c8cdd8;
+  line-height: 1.5;
+}
+
+.change-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tag-added   { background: rgba(78,168,245,0.12); color: #4ea8f5; }
+.tag-changed { background: rgba(240,184,64,0.10);  color: #f0b840; }
+.tag-fixed   { background: rgba(80,200,120,0.10);  color: #50c878; }
+.tag-removed { background: rgba(220,80,80,0.10);   color: #e05555; }
+
+/* ── LOADING / ERROR ── */
+#loading, #error {
+  padding: 80px 70px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+#error { color: #e05555; display: none; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid #20232c;
+  padding: 60px 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-left { display: flex; flex-direction: column; gap: 5px; }
+.footer-logo { font-size: 18px; font-weight: 800; color: white; }
+.footer-credit { font-size: 13px; color: #737b87; }
+.footer-build  { font-size: 12px; color: #3d4150; margin-top: 2px; }
+
+.footer-right { display: flex; align-items: center; gap: 24px; }
+.footer-right a { color: #737b87; text-decoration: none; font-size: 14px; transition: color 0.15s; }
+.footer-right a:hover { color: white; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .links a:not(.play) { display: none; }
+  .page-header { padding: 50px 24px 40px; }
+  .page-header-left h1 { font-size: 48px; }
+  .updates-list { padding: 0 24px; }
+  .update-row { grid-template-columns: 1fr; gap: 8px; }
+  .update-row-count, .update-row-arrow { display: none; }
+  .detail-wrap { padding: 40px 24px 70px; }
+  .detail-name { font-size: 36px; }
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Zero's Marvelous Shenanigans</a>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="changelog.html" class="active">Changelog</a>
+    <a href="#" class="play">Play</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Change<span>log.</span></h1>
+    <p id="header-sub">Every update, every fix, every change — all in one place.</p>
+  </div>
+  <button class="back-btn" id="back-btn" onclick="goBack()">← All updates</button>
+</div>
+
+<div id="loading">Loading updates...</div>
+<div id="error">Failed to load updates.json. Make sure it's in the same folder as this file.</div>
+
+<!-- LIST VIEW -->
+<div id="list-view">
+  <div class="updates-list" id="updates-list"></div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="detail-view">
+  <div class="detail-wrap" id="detail-wrap"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <span class="footer-logo">Zero's Marvelous Shenanigans</span>
+    <span class="footer-credit">Made with ❤️ by Zero</span>
+    <span class="footer-build" id="footer-build">Build —</span>
+  </div>
+  <div class="footer-right">
+    <a href="roadmap.html">Roadmap</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="#" class="play">Play on Roblox</a>
+  </div>
+</footer>
+
+<script>
+let allUpdates = [];
+
+// ── Format date ──
+function formatDate(str) {
+  const d = new Date(str + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// ── Render the full list ──
+function renderList(updates) {
+  const container = document.getElementById('updates-list');
+  container.innerHTML = '';
+
+  updates.forEach(u => {
+    const row = document.createElement('a');
+    row.className = 'update-row';
+    row.href = `?v=${encodeURIComponent(u.version)}`;
+    row.innerHTML = `
+      <div class="update-row-meta">
+        <span class="update-row-version">v${u.version}</span>
+        <span class="update-row-date">${formatDate(u.date)}</span>
+      </div>
+      <div>
+        <div class="update-row-name">${u.updateName}</div>
+        <div class="update-row-desc">${u.description}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="update-row-count">${u.changes.length} changes</span>
+        <span class="update-row-arrow">→</span>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// ── Render a single update ──
+function renderDetail(u) {
+  const tagCounts = {};
+  u.changes.forEach(c => { tagCounts[c.type] = (tagCounts[c.type] || 0) + 1; });
+
+  const changesHTML = u.changes.map(c => `
+    <div class="change-item">
+      <span class="change-tag tag-${c.type}">${c.type}</span>
+      <span>${c.text}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('detail-wrap').innerHTML = `
+    <div class="detail-version">v${u.version}</div>
+    <div class="detail-name">${u.updateName}</div>
+    <div class="detail-date">${formatDate(u.date)}</div>
+    <div class="detail-description">${u.description}</div>
+
+    ${u.devNotes ? `
+    <div class="detail-devnotes">
+      <div class="detail-section-label">Dev Notes</div>
+      <p>${u.devNotes}</p>
+    </div>` : ''}
+
+    <div class="detail-changes">
+      <div class="detail-section-label">Changes</div>
+      <div class="changes-list">${changesHTML}</div>
+    </div>
+  `;
+}
+
+// ── Switch between views ──
+function showList() {
+  document.getElementById('list-view').style.display = 'block';
+  document.getElementById('detail-view').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'none';
+  document.getElementById('header-sub').textContent = 'Every update, every fix, every change — all in one place.';
+}
+
+function showDetail(u) {
+  document.getElementById('list-view').style.display = 'none';
+  document.getElementById('detail-view').style.display = 'block';
+  document.getElementById('back-btn').style.display = 'inline-flex';
+  document.getElementById('header-sub').textContent = '';
+  renderDetail(u);
+}
+
+function goBack() {
+  history.pushState({}, '', 'changelog.html');
+  showList();
+}
+
+// ── Read URL param and route ──
+function route() {
+  const params = new URLSearchParams(window.location.search);
+  const v = params.get('v');
+
+  if (v) {
+    const match = allUpdates.find(u => u.version === v);
+    if (match) {
+      showDetail(match);
+    } else {
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('error').textContent = `No update found for version "${v}".`;
+      showList();
+    }
+  } else {
+    showList();
+  }
+}
+
+// ── Load JSON ──
+async function init() {
+  try {
+    const res = await fetch('updates.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    allUpdates = await res.json();
+
+    // Set footer build to latest version
+    if (allUpdates.length > 0) {
+      document.getElementById('footer-build').textContent = `Build ${allUpdates[0].version}`;
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    renderList(allUpdates);
+    route();
+  } catch (e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    console.error(e);
+  }
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate', route);
+
+init();
+</script>
+
+</body>
+</html>
