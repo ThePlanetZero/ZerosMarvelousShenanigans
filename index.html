@@ -661,13 +661,29 @@ footer {
   <div class="update-bigtitle">What's new.</div>
   <div class="update-card">
     <div>
-      <div class="update-version">v0.8.0</div>
-      <div class="update-name">The Battle Update</div>
-      <div class="update-desc">Placeholder description of what dropped in this patch. New nodes, balance changes, bug fixes, and whatever else made it in.</div>
+      <div class="update-version" id="latest-version">—</div>
+      <div class="update-name" id="latest-name">Loading...</div>
+      <div class="update-desc" id="latest-desc"></div>
     </div>
-    <a href="#" class="update-link">Read patch notes →</a>
+    <a href="#" class="update-link" id="latest-link">Read patch notes →</a>
   </div>
 </div>
+ 
+<script>
+fetch('updates.json')
+  .then(r => r.json())
+  .then(updates => {
+    if (!updates || updates.length === 0) return;
+    const latest = updates[0];
+    document.getElementById('latest-version').textContent = 'v' + latest.version;
+    document.getElementById('latest-name').textContent = latest.updateName;
+    document.getElementById('latest-desc').textContent = latest.description;
+    document.getElementById('latest-link').href = 'changelog.html?v=' + encodeURIComponent(latest.version);
+  })
+  .catch(() => {
+    document.getElementById('latest-name').textContent = 'Could not load update.';
+  });
+<\/script>
 
 <!-- DEV NOTES -->
 <div class="devnotes-section">
