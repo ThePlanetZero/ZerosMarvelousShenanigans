@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feedback — Zero's Marvelous Shenanigans</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f1014;
+  color: white;
+  font-family: Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 70px;
+  border-bottom: 1px solid #20232c;
+  position: sticky;
+  top: 0;
+  background: #0f1014;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+  color: white;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.links a {
+  color: #9fa6b3;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.links a:hover { color: white; }
+
+.play {
+  background: white;
+  color: black;
+  padding: 11px 22px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.play:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+/* ── PAGE ── */
+.page {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 24px 100px;
+}
+
+/* ── HEADER ── */
+.page-header {
+  text-align: center;
+  max-width: 600px;
+  margin-bottom: 56px;
+}
+
+.page-header h1 {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+
+.page-header h1 span { color: #4ea8f5; }
+
+.page-header p {
+  font-size: 18px;
+  color: #9da4b0;
+  line-height: 1.7;
+}
+
+/* ── FORM CARD ── */
+.form-card {
+  background: #13151d;
+  border: 1px solid #20232c;
+  border-radius: 20px;
+  padding: 48px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.field {
+  margin-bottom: 24px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9fa6b3;
+  margin-bottom: 10px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: #1a1d28;
+  border: 1px solid #23262f;
+  border-radius: 12px;
+  color: white;
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #3d4150;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #4ea8f5;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.6;
+}
+
+/* custom select arrow */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  pointer-events: none;
+  font-size: 14px;
+}
+
+.field select option {
+  background: #1a1d28;
+  color: white;
+}
+
+/* placeholder color for select */
+.field select.unset { color: #3d4150; }
+.field select { color: white; }
+
+/* ── SUBMIT ── */
+.submit-btn {
+  width: 100%;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 14px;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 17px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.submit-btn:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── SUCCESS STATE ── */
+.success {
+  display: none;
+  text-align: center;
+  padding: 20px 0 8px;
+}
+
+.success-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.success h2 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.success p {
+  font-size: 16px;
+  color: #9da4b0;
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid #20232c;
+  padding: 60px 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-left { display: flex; flex-direction: column; gap: 5px; }
+.footer-logo { font-size: 18px; font-weight: 800; color: white; }
+.footer-credit { font-size: 13px; color: #737b87; }
+.footer-build  { font-size: 12px; color: #3d4150; margin-top: 2px; }
+
+.footer-right { display: flex; align-items: center; gap: 24px; }
+.footer-right a { color: #737b87; text-decoration: none; font-size: 14px; transition: color 0.15s; }
+.footer-right a:hover { color: white; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  nav { padding: 0 24px; }
+  .links a:not(.play) { display: none; }
+  .page { padding: 50px 16px 80px; }
+  .page-header h1 { font-size: 38px; }
+  .form-card { padding: 28px 20px; }
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Zero's Marvelous Shenanigans</a>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="changelog.html">Changelog</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="#" class="play">Play</a>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <div class="page-header">
+    <h1>Got something<br>to <span>say?</span></h1>
+    <p>Got something you don't like? You think I made a <strong>HORRIBLE MISTAKE WITH A CHANGE???</strong> Or maybe just want to share your thoughts? Either way — I'm listening.</p>
+  </div>
+
+  <div class="form-card">
+
+    <!-- FORM -->
+    <div id="form-wrap">
+
+      <div class="field">
+        <label>Roblox Username</label>
+        <input type="text" id="f-user" placeholder="@YourUsername" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="f-title" placeholder="Give your feedback a title">
+      </div>
+
+      <div class="field">
+        <label>Type</label>
+        <div class="select-wrap">
+          <select id="f-type" class="unset" onchange="this.classList.remove('unset')">
+            <option value="" disabled selected hidden>Select a type</option>
+            <option value="Bug Report">🐛 Bug Report</option>
+            <option value="Balance Feedback">⚖️ Balance Feedback</option>
+            <option value="Feature Request">✨ Feature Request</option>
+            <option value="General Feedback">💬 General Feedback</option>
+            <option value="Complaint">😤 Complaint</option>
+            <option value="Compliment">🙏 Compliment</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Message</label>
+        <textarea id="f-message" placeholder="What's on your mind?"></textarea>
+      </div>
+
+      <button class="submit-btn" id="submit-btn" onclick="submitFeedback()">Send Feedback</button>
+
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success" id="success-wrap">
+      <div class="success-icon">🎉</div>
+      <h2>Thank you for your feedback!</h2>
+      <p>It means a lot. I'll read through everything and take it into account.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <span class="footer-logo">Zero's Marvelous Shenanigans</span>
+    <span class="footer-credit">Made with ❤️ by Zero</span>
+    <span class="footer-build">Build 0.8.0</span>
+  </div>
+  <div class="footer-right">
+    <a href="changelog.html">Changelog</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="#" class="play">Play on Roblox</a>
+  </div>
+</footer>
+
+<script>
+const WEBHOOK = 'https://discord.com/api/webhooks/1521050187857137764/2TCatQAYFhvaSKnxqv9ePK1uvi1HJt2rxBJPVdijwJhznaurH-UxNJTTyArEQMX6I6dx';
+
+const TYPE_COLORS = {
+  'Bug Report':       0xe05555,
+  'Balance Feedback': 0xf0b840,
+  'Feature Request':  0x4ea8f5,
+  'General Feedback': 0x9d7dea,
+  'Complaint':        0xff6b6b,
+  'Compliment':       0x50c878,
+};
+
+async function submitFeedback() {
+  const user    = document.getElementById('f-user').value.trim();
+  const title   = document.getElementById('f-title').value.trim();
+  const type    = document.getElementById('f-type').value;
+  const message = document.getElementById('f-message').value.trim();
+
+  if (!user || !title || !type || !message) {
+    // Highlight empty fields
+    ['f-user','f-title','f-type','f-message'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.style.borderColor = '#e05555';
+        el.addEventListener('input', () => el.style.borderColor = '', { once: true });
+      }
+    });
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const payload = {
+    embeds: [{
+      title: `${title}`,
+      description: message,
+      color: TYPE_COLORS[type] || 0x4ea8f5,
+      fields: [
+        { name: 'Roblox User', value: user, inline: true },
+        { name: 'Type',        value: type, inline: true },
+      ],
+      footer: { text: 'Zero\'s Marvelous Shenanigans — Feedback' },
+      timestamp: new Date().toISOString()
+    }]
+  };
+
+  try {
+    const res = await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok || res.status === 204) {
+      document.getElementById('form-wrap').style.display = 'none';
+      document.getElementById('success-wrap').style.display = 'block';
+    } else {
+      throw new Error('Bad response');
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Send Feedback';
+    alert('Something went wrong. Try again!');
+  }
+}
+</script>
+
+</body>
+</html>
