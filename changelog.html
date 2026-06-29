@@ -347,12 +347,12 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="logo">Zero's Marvelous Shenanigans</a>
+  <a href="index" class="logo">Zero's Marvelous Shenanigans</a>
   <div class="links">
-    <a href="index.html">Home</a>
-    <a href="changelog.html" class="active">Changelog</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="index.html" class="play">Play</a>
+    <a href="index">Home</a>
+    <a href="changelog" class="active">Changelog</a>
+    <a href="gallery">Gallery</a>
+    <a href="index" class="play">Play</a>
   </div>
 </nav>
 
@@ -361,7 +361,7 @@ footer {
   <div class="page-header-left">
     <div style="display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;">
       <h1>Change<span>log.</span></h1>
-      <a href="feedback.html" style="font-size:14px;font-weight:600;color:#3d4150;text-decoration:none;transition:color 0.15s;white-space:nowrap;" onmouseover="this.style.color='#9da4b0'" onmouseout="this.style.color='#3d4150'">Pssst. Got feedback? Share it here →</a>
+      <a href="feedback" style="font-size:14px;font-weight:600;color:#3d4150;text-decoration:none;transition:color 0.15s;white-space:nowrap;" onmouseover="this.style.color='#9da4b0'" onmouseout="this.style.color='#3d4150'">Pssst. Got feedback? Share it here →</a>
     </div>
     <p id="header-sub">Every update, every fix, every change — all in one place.</p>
   </div>
@@ -389,8 +389,8 @@ footer {
     <span class="footer-build" id="footer-build">Build —</span>
   </div>
   <div class="footer-right">
-    <a href="changelog.html">Changelog</a>
-    <a href="gallery.html">Gallery</a>
+    <a href="changelog">Changelog</a>
+    <a href="gallery">Gallery</a>
     <a href="#" class="play">Play on Roblox</a>
   </div>
 </footer>
@@ -479,7 +479,7 @@ function showDetail(u) {
 }
 
 function goBack() {
-  history.pushState({}, '', 'changelog.html');
+  history.pushState({}, '', 'changelog');
   showList();
 }
 
