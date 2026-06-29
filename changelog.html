@@ -359,7 +359,10 @@ footer {
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div class="page-header-left">
-    <h1>Change<span>log.</span></h1>
+    <div style="display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;">
+      <h1>Change<span>log.</span></h1>
+      <a href="feedback.html" style="font-size:14px;font-weight:600;color:#3d4150;text-decoration:none;transition:color 0.15s;white-space:nowrap;" onmouseover="this.style.color='#9da4b0'" onmouseout="this.style.color='#3d4150'">Pssst. Got feedback? Share it here →</a>
+    </div>
     <p id="header-sub">Every update, every fix, every change — all in one place.</p>
   </div>
   <button class="back-btn" id="back-btn" onclick="goBack()">← All updates</button>
