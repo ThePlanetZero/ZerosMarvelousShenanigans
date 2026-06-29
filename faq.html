@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ — Zero's Marvelous Shenanigans</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f1014;
+  color: white;
+  font-family: Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 70px;
+  border-bottom: 1px solid #20232c;
+  position: sticky;
+  top: 0;
+  background: #0f1014;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+  color: white;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.links a {
+  color: #9fa6b3;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.links a:hover { color: white; }
+
+.play {
+  background: white;
+  color: black;
+  padding: 11px 22px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.play:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 80px 70px 60px;
+  border-bottom: 1px solid #20232c;
+}
+
+.page-header h1 {
+  font-size: 68px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.page-header h1 span { color: #4ea8f5; }
+
+.page-header p {
+  font-size: 17px;
+  color: #9da4b0;
+  max-width: 440px;
+  line-height: 1.6;
+}
+
+/* ── FAQ LAYOUT ── */
+.faq-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 72px);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  padding: 48px 32px;
+  border-right: 1px solid #20232c;
+  position: sticky;
+  top: 72px;
+  height: calc(100vh - 72px);
+  overflow-y: auto;
+}
+
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #3d4150;
+  margin-bottom: 16px;
+}
+
+.sidebar-link {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-decoration: none;
+  padding: 7px 0;
+  border-left: 2px solid transparent;
+  padding-left: 12px;
+  margin-left: -12px;
+  line-height: 1.4;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.sidebar-link:hover { color: white; }
+.sidebar-link.active { color: white; border-left-color: #4ea8f5; }
+
+/* ── FAQ CONTENT ── */
+.faq-content {
+  padding: 48px 70px 100px;
+}
+
+/* Category heading */
+.faq-category {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9d7dea;
+  margin-top: 56px;
+  margin-bottom: 20px;
+}
+
+.faq-category:first-child { margin-top: 0; }
+
+/* Accordion item */
+.faq-item {
+  border-bottom: 1px solid #20232c;
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  font-family: Inter, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: left;
+  padding: 22px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  transition: color 0.15s;
+}
+
+.faq-question:hover { color: #4ea8f5; }
+.faq-question.open  { color: #4ea8f5; }
+
+.faq-chevron {
+  font-size: 18px;
+  color: #3d4150;
+  flex-shrink: 0;
+  transition: transform 0.25s, color 0.15s;
+  line-height: 1;
+}
+
+.faq-question.open .faq-chevron {
+  transform: rotate(180deg);
+  color: #4ea8f5;
+}
+
+.faq-answer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer-inner {
+  padding: 0 0 24px;
+  font-size: 16px;
+  color: #9da4b0;
+  line-height: 1.8;
+}
+
+/* ── STILL HAVE A QUESTION ── */
+.still-question {
+  margin-top: 64px;
+  background: #13151d;
+  border: 1px solid #20232c;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.still-question-text h3 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.still-question-text p {
+  font-size: 15px;
+  color: #9da4b0;
+  line-height: 1.65;
+  max-width: 440px;
+}
+
+.still-question-btn {
+  background: white;
+  color: black;
+  padding: 13px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.still-question-btn:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid #20232c;
+  padding: 60px 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-left { display: flex; flex-direction: column; gap: 5px; }
+.footer-logo { font-size: 18px; font-weight: 800; color: white; }
+.footer-credit { font-size: 13px; color: #737b87; }
+.footer-build  { font-size: 12px; color: #3d4150; margin-top: 2px; }
+
+.footer-right { display: flex; align-items: center; gap: 24px; }
+.footer-right a { color: #737b87; text-decoration: none; font-size: 14px; transition: color 0.15s; }
+.footer-right a:hover { color: white; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .links a:not(.play) { display: none; }
+  .page-header { padding: 50px 24px 40px; }
+  .page-header h1 { font-size: 48px; }
+  .faq-wrap { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .faq-content { padding: 40px 24px 80px; }
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index" class="logo">Zero's Marvelous Shenanigans</a>
+  <div class="links">
+    <a href="index">Home</a>
+    <a href="changelog">Changelog</a>
+    <a href="faq">FAQ</a>
+    <a href="index" class="play">Play</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Got <span>questions?</span></h1>
+  <p>Everything you need to know about Zero's Marvelous Shenanigans, all in one place.</p>
+</div>
+
+<div class="faq-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Jump to</div>
+    <a class="sidebar-link" href="#the-game">The Game</a>
+    <a class="sidebar-link" href="#graph-editor">Graph Editor</a>
+    <a class="sidebar-link" href="#multiplayer">Multiplayer</a>
+    <a class="sidebar-link" href="#progress">Progress & Saving</a>
+    <a class="sidebar-link" href="#access">Access & Devices</a>
+    <a class="sidebar-link" href="#future">Future Updates</a>
+    <a class="sidebar-link" href="#misc">Miscellaneous</a>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="faq-content">
+
+    <!-- THE GAME -->
+    <div class="faq-category" id="the-game">The Game</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        What is Zero's Marvelous Shenanigans?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Zero's Marvelous Shenanigans is a multiplayer Roblox fighting game where you don't just choose abilities — you build them. Using the in-game Graph Editor, you can connect nodes together to create your own attacks, movement abilities, projectiles, effects, and much more. Once your moveset is ready, take it into battle against other players and see whose creations come out on top.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Is the game free?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Yes! Zero's Marvelous Shenanigans is completely free to play on Roblox.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Why is it called "Zero's Marvelous Shenanigans"?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Because of the inspiration for the game :)</div>
+      </div>
+    </div>
+
+    <!-- GRAPH EDITOR -->
+    <div class="faq-category" id="graph-editor">Graph Editor</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Do I need to know how to code?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">No. The Graph Editor is completely visual. Instead of writing scripts, you'll create abilities by connecting nodes together. Whether you're making a simple punch or a complicated multi-stage attack, everything is designed to be built without programming knowledge.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Is the Graph Editor difficult to learn?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Not at all. The basics are easy to understand, and most players will be able to create their first ability within a few minutes. At the same time, the editor has enough depth that experienced builders can spend hours experimenting with more advanced creations.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Can I make any ability I want?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Almost! The Graph Editor is built to give players a huge amount of creative freedom while still keeping abilities fair and playable in multiplayer. There are countless combinations to experiment with, and new nodes and features will continue to be added over time.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        How many abilities can I create?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">As many as you want. Experimentation is one of the core ideas behind the game, so you're encouraged to keep building, testing, and improving new movesets.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Can I edit my abilities later?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Yes. Your abilities are meant to evolve. You can come back to your creations, improve them, experiment with new ideas, and continue refining them whenever you want.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Can I share my abilities with other players?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Not just yet. Ability publishing is currently in development and will be added in a future update. Once available, you'll be able to publish your creations for other players to discover and use.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Will new Graph nodes be added?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Absolutely. The Graph Editor will continue expanding with new nodes, mechanics, and possibilities as development progresses, allowing for even more creative abilities.</div>
+      </div>
+    </div>
+
+    <!-- MULTIPLAYER -->
+    <div class="faq-category" id="multiplayer">Multiplayer</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Is the game multiplayer?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Yes! Battles are built around multiplayer. Fight your friends, challenge other players, and test your custom movesets against abilities created by everyone else.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Is there PvE?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">At launch, the primary focus is player-versus-player combat. Additional experiences and game modes may be introduced in future updates.</div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="faq-category" id="progress">Progress & Saving</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Will my progress be saved?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Yes. Your progress is automatically saved, including your abilities, customization, and other important data, so you can continue where you left off.</div>
+      </div>
+    </div>
+
+    <!-- ACCESS & DEVICES -->
+    <div class="faq-category" id="access">Access & Devices</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        What devices can I play on?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Release includes full support for PC. Mobile support is currently in development and will arrive in a future update. Console support is planned after that.</div>
+      </div>
+    </div>
+
+    <!-- FUTURE -->
+    <div class="faq-category" id="future">Future Updates</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Will there be updates?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Definitely. Zero's Marvelous Shenanigans is actively developed. Expect new features, balancing, bug fixes, quality-of-life improvements, Graph Editor additions, and entirely new gameplay systems over time.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Will there be more content in the future?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Absolutely. The current version is only the beginning. New Graph Editor features, customization options, game modes, mechanics, and much more are already planned for future updates.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Where can I keep up with development?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">The <a href="changelog" style="color:#4ea8f5;text-decoration:none;font-weight:600;">Changelog page</a> is the best place to stay informed about updates, improvements, and new features. Developer Notes also provide occasional behind-the-scenes insights into the development process.</div>
+      </div>
+    </div>
+
+    <!-- MISC -->
+    <div class="faq-category" id="misc">Miscellaneous</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        I found a bug. What should I do?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Please report it through the <a href="feedback" style="color:#4ea8f5;text-decoration:none;font-weight:600;">Feedback page</a>. Every report helps improve the game. If possible, include screenshots, videos, or clear steps explaining how to reproduce the issue.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggle(this)">
+        Can I suggest ideas?
+        <span class="faq-chevron">▾</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Of course! Whether it's a new node, a quality-of-life improvement, a balancing suggestion, or a completely new feature, feedback is always appreciated. While not every suggestion can be added, every one will be considered.</div>
+      </div>
+    </div>
+
+    <!-- STILL HAVE A QUESTION -->
+    <div class="still-question">
+      <div class="still-question-text">
+        <h3>Still have a question?</h3>
+        <p>If your question isn't answered here, feel free to send it through the Feedback page. Even if we can't respond individually, your questions help improve both the game and this FAQ.</p>
+      </div>
+      <a href="feedback" class="still-question-btn">Go to Feedback →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <span class="footer-logo">Zero's Marvelous Shenanigans</span>
+    <span class="footer-credit">Made with ❤️ by Zero</span>
+    <span class="footer-build">Build 0.8.0</span>
+  </div>
+  <div class="footer-right">
+    <a href="changelog">Changelog</a>
+    <a href="faq">FAQ</a>
+    <a href="index" class="play">Play on Roblox</a>
+  </div>
+</footer>
+
+<script>
+function toggle(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+
+  // Close all open items
+  document.querySelectorAll('.faq-question.open').forEach(q => {
+    q.classList.remove('open');
+    q.nextElementSibling.style.maxHeight = null;
+  });
+
+  // Open clicked if it was closed
+  if (!isOpen) {
+    btn.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+// Sidebar active highlight on scroll
+const categories = document.querySelectorAll('.faq-category');
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      const match = document.querySelector(`.sidebar-link[href="#${entry.target.id}"]`);
+      if (match) match.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+categories.forEach(c => observer.observe(c));
+</script>
+
+</body>
+</html>
