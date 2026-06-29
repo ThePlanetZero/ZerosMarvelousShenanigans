@@ -563,9 +563,9 @@ footer {
 <nav>
   <div class="logo">Zero's Marvelous Shenanigans</div>
   <div class="links">
-    <a href="index.html">Home</a>
-    <a href="changelog.html" class="active">Changelog</a>
-    <a href="gallery.html">Gallery</a>
+    <a href="index">Home</a>
+    <a href="changelog" class="active">Changelog</a>
+    <a href="gallery">Gallery</a>
     <a href="#" class="play">Play</a>
   </div>
 </nav>
@@ -684,7 +684,7 @@ fetch('updates.json')
     document.getElementById('latest-version').textContent = 'v' + latest.version;
     document.getElementById('latest-name').textContent = latest.updateName;
     document.getElementById('latest-desc').textContent = latest.description;
-    document.getElementById('latest-link').href = 'changelog.html?v=' + encodeURIComponent(latest.version);
+    document.getElementById('latest-link').href = 'changelog?v=' + encodeURIComponent(latest.version);
   })
   .catch(() => {
     document.getElementById('latest-name').textContent = 'Could not load update.';
@@ -713,8 +713,8 @@ fetch('updates.json')
     <span class="footer-build">Build 0.8.0</span>
   </div>
   <div class="footer-right">
-    <a href="changelog.html">Changelog</a>
-    <a href="gallery.html">Gallery</a>
+    <a href="changelog">Changelog</a>
+    <a href="gallery">Gallery</a>
     <a href="#" class="play">Play on Roblox</a>
   </div>
 </footer>
